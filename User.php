@@ -25,7 +25,7 @@ class User
             $this->cart[] = $_products;
             return true;
         } else {
-            return false;
+            throw new Exception("This product is not available");
         }
     }
 

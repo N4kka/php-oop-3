@@ -14,19 +14,15 @@ $kennels = new Kennels("Cuccia", "Comodissima cuccia per far dormire il tuo cane
 $nicola = new User("Nicola", "sarlinicola7@gmail.com", "pincopallino");
 $nicola->printInfo('20', '193cm');
 $nicola->addProductToCart($food);
-$nicola->addProductToCart($games);
 $nicola->addProductToCart($kennels);
 
 $giochi->available = false;
 
-$result = $nicola->addProductToCart($games);
-if ($result) {
-    echo "The product you have selected has been added to the cart";
-} else {
-    echo "The product you have selected is currently not available";
+try {
+    $nicola->addProductToCart($games);
+} catch (Exception $e) {
+    echo "This is an exception: this product is currently not available";
 }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +37,7 @@ if ($result) {
 
 <body>
 
-    <h1> <?php echo "These are user's info: " . $nicola->printInfo(); ?> </h1>
+    <h1> <?php echo $nicola->printInfo(); ?> </h1>
 
     <h2>Prodotti per animali</h2>
     <ul>
@@ -50,7 +46,7 @@ if ($result) {
         <li> <?php echo 'PetKennels: ' . $kennels->printInfo(); ?> </li>
     </ul>
 
-    <h2>Ciao <?php echo $nicola->name ?>, questo é il tuo carrello</h2>
+    <h2>Ciao <?php echo "These are user's info" . $nicola->name ?>, questo é il tuo carrello</h2>
     <ul>
         <?php foreach ($nicola->cart as $cartProducts) { ?>
             <li> <?php echo $cartProducts->printInfo(); ?> </li>
